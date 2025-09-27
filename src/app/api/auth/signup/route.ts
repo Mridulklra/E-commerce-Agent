@@ -1,5 +1,5 @@
 import { AuthService } from '@/app/services/authServices'
-import { NextRequest } from 'next/server'
+import { NextRequest,NextResponse } from 'next/server'
 
 import { createResponse ,signupSchema} from '@/app/lib/utils'
 // app/api/auth/update-profile/route.ts
@@ -16,7 +16,9 @@ export async function POST(request: NextRequest) {
     const { user, token } = await AuthService.signup(validatedData)
     
     // Set cookie
-    const response = createResponse(true, 'User created successfully', { user }, 201)
+    const response = NextResponse.json( { success: true, message: 'User created successfully', data: { user } },
+      { status: 201 }
+    )
     response.cookies.set('auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -26,6 +28,9 @@ export async function POST(request: NextRequest) {
     
     return response
   } catch (error: any) {
-    return createResponse(false, error.message, null, 400)
+   return NextResponse.json(
+      { success: false, message: error.message, data: null },
+      { status: 400 }
+    )
   }
 }

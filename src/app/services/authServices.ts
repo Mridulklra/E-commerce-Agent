@@ -1,4 +1,4 @@
-import  prisma  from '../lib/prisma'
+import  {prisma}  from '../lib/prisma'
 import { hashPassword, verifyPassword, generateToken } from '../lib/utils'
 import type { SignupData, AuthResponse, UserResponse } from '../lib/types'
 
