@@ -1,7 +1,7 @@
 import { AuthService } from '@/app/services/authServices'
 import { NextRequest } from 'next/server'
 
-import { signinSchema, createResponse,updateProfileSchema ,signupSchema} from '@/app/lib/utils'
+import { createResponse ,signupSchema} from '@/app/lib/utils'
 // app/api/auth/update-profile/route.ts
 
 
