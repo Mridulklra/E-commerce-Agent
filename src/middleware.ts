@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { verifyToken } from '@/app/lib/utils'
+import { verifyTokenEdge } from '@/app/lib/utils' // Use Edge-compatible version
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) { // Make it async
   const { pathname } = request.nextUrl
 
   console.log('🔍 Middleware triggered for:', pathname)
@@ -32,7 +32,7 @@ export function middleware(request: NextRequest) {
       )
     }
 
-    const decoded = verifyToken(token)
+    const decoded = await verifyTokenEdge(token) // Use async Edge version
     console.log('🔓 Decoded token:', decoded)
     
     if (!decoded) {
