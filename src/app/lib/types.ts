@@ -1,3 +1,5 @@
+import { Decimal } from "@prisma/client/runtime/library"
+
 export interface User {
   id: number
   email: string
@@ -80,22 +82,23 @@ export interface Product{
   updatedAt: Date
 }
 
-export interface CreateCategorydate{
+export interface CreateCategoryData{
   name:string
   description?:string|null
   slug:string
 }
-export interface CreateProductDate{
-  name:string
-  description?:string|null
-  price:number
-  sku:string
-  stock:number
-  images:string[]
-  categoryId:number
-}
 
-export interface UpdateProductDate{
+
+export interface CreateProductData {
+  name: string
+  description?: string
+  price: number
+  sku: string
+  stock: number
+  images: string[]
+  categoryId: number
+}
+export interface UpdateProductData{
    name?: string
   description?: string
   price?: number
