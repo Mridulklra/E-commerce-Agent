@@ -37,6 +37,47 @@ export const updateProfileSchema = z.object({
   postalCode: z.string().min(3, 'Postal code is required'),
 })
 
+
+
+export const createCategorySchema = z.object({
+  name: z.string().min(2, 'Category name must be at least 2 characters'),
+  description: z.string().optional(),
+  slug: z.string()
+    .min(2, 'Slug must be at least 2 characters')
+    .regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens')
+})
+export const createProductSchema = z.object({
+  name: z.string().min(2, 'Product name must be at least 2 characters'),
+  description: z.string().optional(),
+  price: z.number().min(0.01, 'Price must be greater than 0'),
+  sku: z.string()
+    .min(3, 'SKU must be at least 3 characters')
+    .regex(/^[A-Z0-9-]+$/, 'SKU must contain only uppercase letters, numbers, and hyphens'),
+  stock: z.number().int().min(0, 'Stock cannot be negative'),
+  images: z.array(z.string().url('Invalid image URL')).min(1, 'At least one image is required'),
+  categoryId: z.number().int().positive('Valid category is required')
+})
+
+export const updateProductSchema=z.object({
+  name: z.string().min(2, 'Product name must be at least 2 characters').optional(),
+  description: z.string().optional(),
+  price: z.number().min(0.01, 'Price must be greater than 0').optional(),
+  stock: z.number().int().min(0, 'Stock cannot be negative').optional(),
+  images: z.array(z.string().url('Invalid image URL')).optional(),
+  categoryId: z.number().int().positive('Valid category is required').optional(),
+  isActive: z.boolean().optional()
+})
+
+export const productFiltersSchema = z.object({
+  categoryId: z.string().transform(Number).optional(),
+  minPrice: z.string().transform(Number).optional(), 
+  maxPrice: z.string().transform(Number).optional(),
+  search: z.string().optional(),
+  page: z.string().transform(Number).optional().default(1),
+  limit: z.string().transform(Number).optional().default(10)
+})
+
+
 // Password utilities
 export const hashPassword = async (password: string): Promise<string> => {
   const rounds = parseInt(process.env.BCRYPT_ROUNDS || '12')
@@ -89,6 +130,24 @@ export const verifyTokenEdge = async (token: string): Promise<{ userId: number; 
     console.log('❌ Edge token verification failed:', error.message)
     return null
   }
+}
+
+
+
+
+export const generateSKU = (productName: string): string => {
+  return productName
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '')
+    .substring(0, 8) + 
+    Date.now().toString().slice(-4)
+}
+export const createSlug = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .replace(/\s+/g, '-')
+    .trim()
 }
 
 // Response utilities remain same

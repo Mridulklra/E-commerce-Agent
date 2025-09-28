@@ -54,6 +54,66 @@ export interface AuthResponse {
   token: string
 }
 
+
+export interface Category{
+  id:number
+  name:string
+  description?:string|null
+  slug:string
+  isActive:boolean
+  createdAt: Date
+  updatedAt:Date
+}
+
+export interface Product{
+  id:number
+  name:string
+   description?:string|null
+   price:number
+   sku:string
+   stock:number
+   images: string[]
+  isActive: boolean
+  categoryId: number
+  category?: Category
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CreateCategorydate{
+  name:string
+  description?:string|null
+  slug:string
+}
+export interface CreateProductDate{
+  name:string
+  description?:string|null
+  price:number
+  sku:string
+  stock:number
+  images:string[]
+  categoryId:number
+}
+
+export interface UpdateProductDate{
+   name?: string
+  description?: string
+  price?: number
+  stock?: number
+  images?: string[]
+  categoryId?: number
+  isActive?: boolean
+}
+export interface ProductFilters {
+  categoryId?: number
+  minPrice?: number
+  maxPrice?: number
+  search?: string
+  page?: number
+  limit?: number
+}
+
+
 export interface ApiResponse<T = any> {
   success: boolean
   message: string
