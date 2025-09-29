@@ -7,7 +7,7 @@ import type {
   UpdateProductData,
   ProductFilters 
 } from '../lib/types'
-
+import { serializeProduct,serializeProducts } from '../lib/utils'
 export class ProductService {
   // Category Methods
   static async createCategory(categoryData: CreateCategoryData): Promise<Category> {
@@ -93,7 +93,7 @@ export class ProductService {
         }
       })
 
-      return product
+      return  serializeProduct(product)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -158,7 +158,7 @@ export class ProductService {
       const totalPages = Math.ceil(total / limit)
 
       return {
-        products,
+        products: serializeProducts(products),
         total,
         page,
         totalPages
@@ -181,7 +181,7 @@ export class ProductService {
         throw new Error('Product not found')
       }
 
-      return product
+      return serializeProduct(product)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -200,7 +200,7 @@ export class ProductService {
         throw new Error('Product not found')
       }
 
-      return product
+      return serializeProduct(product)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -236,7 +236,7 @@ export class ProductService {
         }
       })
 
-      return product
+      return serializeProduct(product)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -276,7 +276,7 @@ export class ProductService {
         take: limit
       })
 
-      return products
+      return serializeProducts(products)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -306,7 +306,7 @@ export class ProductService {
         }
       })
 
-      return updatedProduct
+      return  serializeProduct(updatedProduct)
     } catch (error: any) {
       throw new Error(error.message)
     }

@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { z } from 'zod'
+import { number, z } from 'zod'
 import type { SignupData, SigninData, ApiResponse } from './types'
 import { SignJWT, jwtVerify } from 'jose' 
 // Validation Schemas
@@ -132,8 +132,22 @@ export const verifyTokenEdge = async (token: string): Promise<{ userId: number; 
   }
 }
 
+export const decimatToNumber=(decimal:any):number=>{
+  if(typeof decimal ==='number')return  decimal
+  if(decimal?.toNumber) return decimal.toNumber()
+  return  parseFloat(decimal.toString());
+}
+export const serializeProduct=(product :any):any=>{
+  return {
+    ...product,
+    price:decimatToNumber(product.price)
 
+  }
+}
 
+export const serializeProducts=(products:any[]):any[]=>{
+  return products.map(serializeProduct)
+}
 
 export const generateSKU = (productName: string): string => {
   return productName
