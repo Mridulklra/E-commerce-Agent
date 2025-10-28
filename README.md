@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Agentic E-Commerce Platform
 
-## Getting Started
+An AI-powered e-commerce platform with a conversational shopping assistant built with Next.js 15, Prisma, and PostgreSQL.
 
-First, run the development server:
+## ✨ Features
+
+### 🤖 AI Shopping Assistant
+- **Natural Language Search**: Ask in plain language - "Show me black shoes under 3000"
+- **Smart Product Recommendations**: Context-aware suggestions based on user queries
+- **Conversational Interface**: Chat-like experience for seamless shopping
+
+### 🛒 Core E-Commerce Features
+- User authentication (Sign up, Sign in, Profile management)
+- Product catalog with categories
+- Shopping cart management
+- Order placement and tracking
+- Real-time stock management
+
+### 🎨 Modern UI/UX
+- Responsive design with Tailwind CSS 4
+- Gradient-based modern interface
+- Real-time chat interface for AI assistant
+- Product cards with images
+- Category browsing
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 15.5.4 (App Router)
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: JWT with httpOnly cookies
+- **Styling**: Tailwind CSS 4
+- **Language**: TypeScript
+- **Validation**: Zod
+
+## 📋 Prerequisites
+
+- Node.js 18+ 
+- PostgreSQL database
+- npm/yarn/pnpm
+
+## 🔧 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd agentic-e-commerce
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Setup
+
+Create a `.env` file in the root directory:
+
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/ecommerce_db"
+
+# JWT Secret (generate a secure random string)
+JWT_SECRET="your-super-secret-jwt-key-min-32-chars"
+
+# Bcrypt Rounds
+BCRYPT_ROUNDS=12
+
+# Node Environment
+NODE_ENV=development
+```
+
+**Generate JWT Secret:**
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+### 4. Database Setup
+
+```bash
+# Push Prisma schema to database
+npm run db:push
+
+# Generate Prisma Client
+npx prisma generate
+
+# Seed database with sample data
+npm install -D tsx
+npm run db:seed
+```
+
+### 5. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+├── prisma/
+│   ├── schema.prisma          # Database schema
+│   ├── seed.ts                # Sample data seeder
+│   └── migrations/            # Database migrations
+├── src/
+│   ├── app/
+│   │   ├── api/               # API routes
+│   │   │   ├── auth/          # Authentication endpoints
+│   │   │   ├── products/      # Product CRUD
+│   │   │   ├── categories/    # Category management
+│   │   │   ├── cart/          # Shopping cart
+│   │   │   ├── orders/        # Order management
+│   │   │   └── agent/         # AI assistant
+│   │   ├── shop/              # AI shopping assistant UI
+│   │   ├── lib/               # Utilities
+│   │   │   ├── prisma.ts      # Prisma client
+│   │   │   ├── utils.ts       # Helper functions
+│   │   │   └── types.ts       # TypeScript types
+│   │   ├── services/          # Business logic
+│   │   │   ├── authService.ts
+│   │   │   ├── productService.ts
+│   │   │   ├── cartService.ts
+│   │   │   ├── orderService.ts
+│   │   │   └── agentService.ts
+│   │   ├── globals.css        # Global styles
+│   │   ├── layout.tsx         # Root layout
+│   │   └── page.tsx           # Home page
+│   ├── middleware.ts          # Auth middleware
+│   └── generated/prisma/      # Generated Prisma client
+└── package.json
+```
 
-## Learn More
+## 🔐 API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Authentication
+```
+POST   /api/auth/signup        # Create account
+POST   /api/auth/signin
