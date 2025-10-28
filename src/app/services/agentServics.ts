@@ -1,4 +1,4 @@
-// src/app/services/agentService.ts
+// src/app/services/agentService.ts (FIXED)
 import { ProductService } from './productService'
 import type { Product, ProductFilters } from '../lib/types'
 
